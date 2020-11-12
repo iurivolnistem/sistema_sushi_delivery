@@ -1,0 +1,103 @@
+.card-pedido{
+    border-radius: 0;
+    margin-bottom: 5px;
+}
+
+.card-pedido .card-body{
+    padding: 15px;
+}
+
+.card-pedido .card-body .buttons{
+    margin-bottom: 10px;
+}
+
+.card-pedido .card-body .horario{
+    text-align: right;
+}
+
+.pedido{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.status{
+    width: 25px;
+    height: 25px;
+    display: block;
+    border-radius: 15px;
+}
+
+.aguardando{
+    background-color: #4e73df;
+}
+
+.saiu{
+    background-color: #FA7921;
+}
+
+.preparo{
+    background-color: #f6c23e;
+}
+
+.entregue{
+    background-color: #1cc88a;
+}
+
+.column .card-item{
+    height: 74vh;
+    overflow-y: scroll;
+}
+
+#modal-loader{
+    text-align: center;
+}
+#modal-loader i{    
+    font-size: 25px;
+}
+
+#myModal .modal-content{
+    border-radius: 0;
+}
+
+#myModal .modal-content .modal-body{
+    padding: 0;
+}
+
+#myModal .modal-header{
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+#myModal #conteudo-pedido h5{
+    position: relative;
+    text-transform: uppercase;
+    padding: 10px;
+    margin: 0;
+}
+
+#myModal #conteudo-pedido h4{
+    position: relative;
+    text-transform: uppercase;
+    padding: 10px;
+    background-color: red;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#myModal #conteudo-pedido p{
+    margin: 0;
+}
+
+#myModal #conteudo-pedido{
+    padding: 10px;
+}
+
+#myModal #conteudo-pedido #todos-produtos{
+/* #myModal #conteudo-pedido #pedido-cliente,
+#myModal #conteudo-pedido #pedido-endereco{ */
+    padding: 10px;
+    border-left: 2px solid rgba(0,0,0,0.3);
+}

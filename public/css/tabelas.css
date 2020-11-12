@@ -1,0 +1,57 @@
+.dataTables_filter, .dataTables_paginate{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dataTables_length label{
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+
+.dataTables_length label select{
+    margin-left: 10px;
+}
+
+.dataTables_filter label{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.dataTables_filter label input{
+    margin-left: 10px;
+}
+
+table{
+    margin: 20px 0;
+}
+.card-produto{
+    margin-bottom: 10px;
+}
+
+.card-produto .card-image{
+    width: 100%;
+    height: 200px;
+    max-height: 200px;
+}
+
+.card-produto .card-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-produto .card-body{
+    padding: 10px;
+}
+
+td.imagem{
+    width: 200px;
+    height: 200px;
+}
+
+td.imagem img{
+    width: 100%;
+    object-fit: cover;
+}
