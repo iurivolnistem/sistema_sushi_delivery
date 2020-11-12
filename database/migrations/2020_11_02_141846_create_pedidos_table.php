@@ -16,7 +16,7 @@ class CreatePedidosTable extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('valor', 8,2);
-            $table->string('status', 50);
+            $table->integer('status');
             $table->timestampsTz(0);
             $table->integer('id_cliente')->unsigned();
             $table->foreign('id_cliente')->references('id')->on('clientes');

@@ -25,11 +25,11 @@
                             <div class="card-body ">
                                 <div class="pedido">
                                 Pedido: #{{$item->id}} 
-                                <span class="status @if($item->status === 'Aguardando') aguardando @elseif($item->status === 'Saiu') saiu @elseif($item->status === 'Preparo') preparo @elseif($item->status === 'Entregue') entregue @endif "></span>
+                                <span class="status @if($item->status === 0) aguardando @elseif($item->status === 2) saiu @elseif($item->status === 1) preparo @elseif($item->status === 3) entregue @endif "></span>
                                 </div>
                                 <div class="buttons">
                                     <button class="btn btn-info openBtn" data-pedido="{{$item->id}}"><i class="fas fa-info-circle"></i></button>
-                                    @if($item->status !== 'Entregue' && $item->status !== 'Saiu')
+                                    @if($item->status !== 3 && $item->status !== 2)
                                         <a href="" class="btn btn-danger"><i class="fas fa-ban"></i></a>
                                         <button href="" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></button>
                                     @endif
@@ -54,11 +54,11 @@
                             <div class="card-body">
                                 <div class="pedido">
                                 Pedido: #{{$item->id}} 
-                                <span class="status @if($item->status === 'Aguardando') aguardando @elseif($item->status === 'Saiu') saiu @elseif($item->status === 'Preparo') preparo @elseif($item->status === 'Entregue') entregue @endif "></span>
+                                <span class="status @if($item->status === 0) aguardando @elseif($item->status === 2) saiu @elseif($item->status === 1) preparo @elseif($item->status === 3) entregue @endif "></span>
                                 </div>
                                 <div class="buttons">
                                     <button class="btn btn-info openBtn" data-pedido="{{$item->id}}"><i class="fas fa-info-circle"></i></button>
-                                    @if($item->status !== 'Entregue' && $item->status !== 'Saiu')
+                                    @if($item->status !== 3 && $item->status !== 2)
                                         <a href="" class="btn btn-danger"><i class="fas fa-ban"></i></a>
                                         <button href="" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></button>
                                     @endif
@@ -83,11 +83,11 @@
                             <div class="card-body">
                                 <div class="pedido">
                                 Pedido: #{{$item->id}} 
-                                <span class="status @if($item->status === 'Aguardando') aguardando @elseif($item->status === 'Saiu') saiu @elseif($item->status === 'Preparo') preparo @elseif($item->status === 'Entregue') entregue @endif "></span>
+                                <span class="status @if($item->status === 0) aguardando @elseif($item->status === 2) saiu @elseif($item->status === 1) preparo @elseif($item->status === 3) entregue @endif "></span>
                                 </div>
                                 <div class="buttons">
                                     <button class="btn btn-info openBtn" data-pedido="{{$item->id}}"><i class="fas fa-info-circle"></i></button>
-                                    @if($item->status !== 'Entregue' && $item->status !== 'Saiu')
+                                    @if($item->status !== 3 && $item->status !== 2)
                                         <a href="" class="btn btn-danger"><i class="fas fa-ban"></i></a>
                                         <button href="" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></button>
                                     @endif
@@ -112,11 +112,11 @@
                             <div class="card-body">
                                 <div class="pedido">
                                 Pedido: #{{$item->id}} 
-                                <span class="status @if($item->status === 'Aguardando') aguardando @elseif($item->status === 'Saiu') saiu @elseif($item->status === 'Preparo') preparo @elseif($item->status === 'Entregue') entregue @endif "></span>
+                                <span class="status @if($item->status === 0) aguardando @elseif($item->status === 2) saiu @elseif($item->status === 1) preparo @elseif($item->status === 3) entregue @endif "></span>
                                 </div>
                                 <div class="buttons">
                                     <button class="btn btn-info openBtn" data-pedido="{{$item->id}}"><i class="fas fa-info-circle"></i></button>
-                                    @if($item->status !== 'Entregue' && $item->status !== 'Saiu')
+                                    @if($item->status !== 3 && $item->status !== 2)
                                         <a href="" class="btn btn-danger"><i class="fas fa-ban"></i></a>
                                         <button href="" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></button>
                                     @endif

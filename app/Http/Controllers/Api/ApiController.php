@@ -16,6 +16,15 @@ use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
+    public function __construct(){
+        $this->aguardando = 0;
+        $this->preparo = 1;
+        $this->saiu = 2;
+        $this->entregue = 3;
+        $this->cancelado = 4;
+        $this->devolvido = 5;
+    }
+
     public function validarCliente($id){
         $cliente = Cliente::where('id', $id)->first();
 
@@ -51,22 +60,28 @@ class ApiController extends Controller
 
     public function fazerPedido(Request $request){       
 
-        $pedido = Pedido::create([
-            'id_cliente' => $request->id_cliente,
-            'valor' => $request->valor,
-            'status' => 'Aguardando'
-        ]);
+        $endereco_ativo = Endereco::where('id_cliente', $request->id_cliente)->where('status', true)->first();
 
-        foreach($request->array as $key => $item){
-            PedidoProduto::create([
-                'id_produto' => $item['id'],
-                'id_pedido' => $pedido->id,
-                'quantidade' => $item['qtde']
-            ]);
+        if($endereco_ativo == null){
+            return response()->json(['error' => 'endereco', 'mensagem' => 'Sem um endereço ativo, você não pode fazer pedidos, ative um novo endereço e tente novamente!']);
         }
-
-        return response()->json('Pedido enviado com sucesso!');
+        else{
+            $pedido = Pedido::create([
+                'id_cliente' => $request->id_cliente,
+                'valor' => $request->valor,
+                'status' => $this->aguardando
+            ]);
     
+            foreach($request->array as $key => $item){
+                PedidoProduto::create([
+                    'id_produto' => $item['id'],
+                    'id_pedido' => $pedido->id,
+                    'quantidade' => $item['qtde']
+                ]);
+            }
+    
+            return response()->json(['error' => '', 'mensagem' => 'Pedido enviado com sucesso!']);
+        }
     }
 
     public function getEnderecos($id){
@@ -229,13 +244,11 @@ class ApiController extends Controller
     public function getPedidos($id){
         $pedidos = Pedido::with('produtos')->where('id_cliente', $id)->orderBy('status', 'ASC')->get();
 
-        // $pedidos->created_at->tz('America/Sao_Paulo');
-
         if($pedidos->count() > 0){
             return response()->json(['error' => '', 'pedidos' => $pedidos]);
         }
         else{
-            return response()->json(['error' => '', 'mensagem' => 'Parece que você ainda não tem pedidos!']);
+            return response()->json(['error' => 'true', 'mensagem' => 'Opss... Parece que você ainda não fez pedidos :(']);
         }
 
     }

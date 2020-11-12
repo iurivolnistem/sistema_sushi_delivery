@@ -10,11 +10,20 @@ use Ramsey\Uuid\Type\Decimal;
 
 class PedidoController extends Controller
 {
+    public function __construct(){
+        $this->aguardando = 0;
+        $this->preparo = 1;
+        $this->saiu = 2;
+        $this->entregue = 3;
+        $this->cancelado = 4;
+        $this->devolvido = 5;
+    }
+
     public function somarPedidos(){
         $ano = date('Y');
         $from = $ano.'-'.'01-01'; 
         $to = $ano.'-'.'12-31';
-        $soma = Pedido::where('status', 'Entregue')->whereBetween('created_at', [$from, $to])->sum('valor');
+        $soma = Pedido::where('status', $this->entregue)->whereBetween('created_at', [$from, $to])->sum('valor');
         
 
         return response()->json($soma);
@@ -28,25 +37,25 @@ class PedidoController extends Controller
         $dias_mes = date('t', strtotime($from));
         $to = $ano.'-'.$mes.'-'.$dias_mes;
 
-        $soma = Pedido::where('status', 'Entregue')->whereBetween('created_at', [$from, $to])->sum('valor');
+        $soma = Pedido::where('status', $this->entregue)->whereBetween('created_at', [$from, $to])->sum('valor');
 
         return response($soma);
     }
 
     public function buscarPedidos(){
-        $aguardando = Pedido::where('status', 'Aguardando')->orderBy('created_at', 'ASC')->get();
-        $preparando = Pedido::where('status', 'Preparo')->orderBy('created_at', 'DESC')->get();
-        $saiu       = Pedido::where('status', 'Saiu')->orderBy('created_at', 'DESC')->get();
-        $entregue   = Pedido::where('status', 'Entregue')->orderBy('created_at', 'DESC')->get();
+        $aguardando = Pedido::where('status', $this->aguardando)->orderBy('created_at', 'ASC')->get();
+        $preparando = Pedido::where('status', $this->preparo)->orderBy('created_at', 'DESC')->get();
+        $saiu       = Pedido::where('status', $this->saiu)->orderBy('created_at', 'DESC')->get();
+        $entregue   = Pedido::where('status', $this->entregue)->orderBy('created_at', 'DESC')->get();
 
         return View('dashboard.lista_pedidos', compact('aguardando','preparando','saiu','entregue', $aguardando, $preparando, $saiu, $entregue));
     }
 
     public function getPedidosStatus(){
-        $aguardando = Pedido::where('status', 'Aguardando')->count();
-        $saiu = Pedido::where('status', 'Saiu')->count();
-        $preparando = Pedido::where('status', 'Preparo')->count();
-        $entregue = Pedido::where('status', 'Entregue')->count();
+        $aguardando = Pedido::where('status', $this->aguardando)->count();
+        $saiu = Pedido::where('status', $this->saiu)->count();
+        $preparando = Pedido::where('status', $this->preparo)->count();
+        $entregue = Pedido::where('status', $this->entregue)->count();
 
         $array = [$aguardando, $saiu, $preparando, $entregue];
 
@@ -62,7 +71,7 @@ class PedidoController extends Controller
             $dias_mes = date('t', strtotime($from));
             $to = $ano.'-'.$i.'-'.$dias_mes;
 
-            $query = Pedido::where('status', 'Entregue')->whereBetween('created_at', [$from, $to])->sum('valor');
+            $query = Pedido::where('status', $this->entregue)->whereBetween('created_at', [$from, $to])->sum('valor');
             array_push($array, $query);
 
         }
