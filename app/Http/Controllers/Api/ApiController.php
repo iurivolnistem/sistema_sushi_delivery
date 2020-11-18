@@ -25,62 +25,40 @@ class ApiController extends Controller
         $this->devolvido = 5;
     }
 
-    public function validarCliente($id){
-        $cliente = Cliente::where('id', $id)->first();
+    //Funções de endereço
 
-        if($cliente !== null){
-            return response()->json(['status'=> 'true', 'mensagem' => 'Cliente inválido', 'cliente' => $cliente]);
+    public function cadastrarEndereco(Request $request){
+        $validacao = Validator::make($request->all(),[
+            'nome' => 'required|regex:/^[a-zA-Z ]*$/|max:20',
+            'cep' => 'required|max:9',
+            'logradouro' => 'required|max:100|regex:/^[a-zA-Z ]*$/|string',
+            'bairro' => 'max:100|string|regex:/^[a-zA-Z ]*$/',
+            'cidade' => 'required|max:100|regex:/^[a-zA-Z ]*$/|string',
+            'estado'    => 'required|max:2',
+            'numero' => 'required|max:10',
+            'complemento' => 'max:100|'
+        ]);
+
+        if($validacao->fails()){
+            return response()->json(['error' => 'validação', 'erros' => $validacao->errors()]);
         }
         else{
-            return response()->json(['status'=> 'false', 'mensagem' => 'Cliente inválido']);
-        }
-    }
-
-    public function getProdutos(){
-        $lista = Produto::where('status', true)->get();
-
-        if($lista != ''){
-            return response()->json(['error' => '', 'data' => $lista]);
-        }
-        else{
-            return response()->json(['error' => 'Nenhum produto encontrado']);
-        }
-    }
-
-    public function getProduto($id){
-        $produto = Produto::where('id', $id)->first();
-
-        if($produto != null){
-            return response()->json(['error' => '', 'data' => $produto]);
-        }
-        else{
-            return response()->json(['error' => 'Produto não encontrado']);
-        }
-    }
-
-    public function fazerPedido(Request $request){       
-
-        $endereco_ativo = Endereco::where('id_cliente', $request->id_cliente)->where('status', true)->first();
-
-        if($endereco_ativo == null){
-            return response()->json(['error' => 'endereco', 'mensagem' => 'Sem um endereço ativo, você não pode fazer pedidos, ative um novo endereço e tente novamente!']);
-        }
-        else{
-            $pedido = Pedido::create([
+            $endereco = Endereco::create([
+                'nome' => $request->nome,
+                'cep' => $request->cep,
+                'logradouro' => $request->logradouro,
+                'bairro' => $request->bairro == '' ? 'Centro' : $request->bairro,
+                'cidade' => $request->cidade,
+                'estado' => $request->estado,
+                'numero' => $request->numero,
+                'complemento' => $request->complemento,
                 'id_cliente' => $request->id_cliente,
-                'valor' => $request->valor,
-                'status' => $this->aguardando
+                'status' => 0
             ]);
-    
-            foreach($request->array as $key => $item){
-                PedidoProduto::create([
-                    'id_produto' => $item['id'],
-                    'id_pedido' => $pedido->id,
-                    'quantidade' => $item['qtde']
-                ]);
-            }
-    
-            return response()->json(['error' => '', 'mensagem' => 'Pedido enviado com sucesso!']);
+
+            $this->changeEnderecoAtivo($endereco->id, $endereco->id_cliente);
+
+            return response()->json(['error' => '', 'mensagem' => 'Endereço cadastrado com sucesso!']);
         }
     }
 
@@ -120,41 +98,6 @@ class ApiController extends Controller
         }
     }
 
-    public function cadastrarEndereco(Request $request){
-        $validacao = Validator::make($request->all(),[
-            'nome' => 'required|regex:/^[a-zA-Z ]*$/|max:20',
-            'cep' => 'required|max:9',
-            'logradouro' => 'required|max:100|regex:/^[a-zA-Z ]*$/|string',
-            'bairro' => 'max:100|string|regex:/^[a-zA-Z ]*$/',
-            'cidade' => 'required|max:100|regex:/^[a-zA-Z ]*$/|string',
-            'estado'    => 'required|max:2',
-            'numero' => 'required|max:10',
-            'complemento' => 'max:100|'
-        ]);
-
-        if($validacao->fails()){
-            return response()->json(['error' => 'validação', 'erros' => $validacao->errors()]);
-        }
-        else{
-            $endereco = Endereco::create([
-                'nome' => $request->nome,
-                'cep' => $request->cep,
-                'logradouro' => $request->logradouro,
-                'bairro' => $request->bairro == '' ? 'Centro' : $request->bairro,
-                'cidade' => $request->cidade,
-                'estado' => $request->estado,
-                'numero' => $request->numero,
-                'complemento' => $request->complemento,
-                'id_cliente' => $request->id_cliente,
-                'status' => 0
-            ]);
-
-            $this->changeEnderecoAtivo($endereco->id, $endereco->id_cliente);
-
-            return response()->json(['error' => '', 'mensagem' => 'Endereço cadastrado com sucesso!']);
-        }
-    }
-
     public function excluirEndereco($id, $id_cliente){
 
         $cliente_enderecos = Endereco::where('id_cliente', $id_cliente)->get();
@@ -168,16 +111,9 @@ class ApiController extends Controller
         }
     }
 
-    public function getTelefones($id){
-        $telefones = Telefone::where('id_cliente', $id)->orderBy('status', 'DESC')->get();
+    //fim
 
-        if($telefones != ''){
-            return response()->json(['error' => '', 'telefones' => $telefones]);
-        }
-        else{
-            return response()->json(['error' => 'Nenhum telefone encontrado']);
-        }
-    }
+    //Funções de telefones
 
     public function cadastrarTelefone(Request $request){
         $validacao = Validator::make($request->all(),[
@@ -199,6 +135,17 @@ class ApiController extends Controller
             $this->changeTelefoneAtivo($telefone->id, $telefone->id_cliente);
 
             return response()->json(['error' => '', 'mensagem' => 'Telefone cadastrado com sucesso!']);
+        }
+    }
+
+    public function getTelefones($id){
+        $telefones = Telefone::where('id_cliente', $id)->orderBy('status', 'DESC')->get();
+
+        if($telefones != ''){
+            return response()->json(['error' => '', 'telefones' => $telefones]);
+        }
+        else{
+            return response()->json(['error' => 'Nenhum telefone encontrado']);
         }
     }
 
@@ -240,6 +187,63 @@ class ApiController extends Controller
         }
     }
 
+    //fim
+
+    //Funções de produtos
+
+    public function getProdutos(){
+        $lista = Produto::where('status', true)->get();
+
+        if($lista != ''){
+            return response()->json(['error' => '', 'data' => $lista]);
+        }
+        else{
+            return response()->json(['error' => 'Nenhum produto encontrado']);
+        }
+    }
+
+    public function getProduto($id){
+        $produto = Produto::where('id', $id)->first();
+
+        if($produto != null){
+            return response()->json(['error' => '', 'data' => $produto]);
+        }
+        else{
+            return response()->json(['error' => 'Produto não encontrado']);
+        }
+    }
+
+    //fim
+
+    //Funções de pedidos
+
+    public function fazerPedido(Request $request){       
+
+        $endereco_ativo = Endereco::where('id_cliente', $request->id_cliente)->where('status', true)->first();
+
+        if($endereco_ativo == null){
+            return response()->json(['error' => 'endereco', 'mensagem' => 'Sem um endereço ativo, você não pode fazer pedidos, ative um novo endereço e tente novamente!']);
+        }
+        else{
+            $pedido = Pedido::create([
+                'id_cliente' => $request->id_cliente,
+                'valor' => $request->valor,
+                'status' => $this->aguardando, 
+                'pagamento' => intval($request->pagamento),
+                'troco' => floatval($request->troco)
+            ]);
+    
+            foreach($request->array as $key => $item){
+                PedidoProduto::create([
+                    'id_produto' => $item['id'],
+                    'id_pedido' => $pedido->id,
+                    'quantidade' => $item['qtde']
+                ]);
+            }
+    
+            return response()->json(['error' => '', 'mensagem' => 'Pedido enviado com sucesso!']);
+        }
+    }
 
     public function getPedidos($id){
         $pedidos = Pedido::with('produtos')->where('id_cliente', $id)->orderBy('status', 'ASC')->get();
@@ -252,4 +256,47 @@ class ApiController extends Controller
         }
 
     }
+
+    public function getPedido($id){
+        $pedido = Pedido::find($id);
+        $pedido->produtos;
+
+        if($pedido){
+            return response()->json(['error' => '', 'pedido' => $pedido]);
+        }
+        else{
+            return response()->json(['error' => 'true', 'mensagem' => 'Parece que este pedido não existe!']);
+        }
+    }
+
+    public function confirmaEntrega($id){
+        $pedido = Pedido::where('id', $id)->update([
+            'status' => 3
+        ]);
+
+        if($pedido){
+            return response()->json(['error' => '', 'mensagem' => 'Obrigado por nos informar!']);
+        }
+        else{
+            return response()->json(['error' => 'true', 'mensagem' => 'Ocorreu um erro ao confirmar sua entrega!']);
+        }
+    }
+
+    //fim
+
+    //Funções de clientes
+
+    public function validarCliente($id){
+        $cliente = Cliente::where('id', $id)->first();
+
+        if($cliente !== null){
+            return response()->json(['status'=> 'true', 'mensagem' => 'Cliente inválido', 'cliente' => $cliente]);
+        }
+        else{
+            return response()->json(['status'=> 'false', 'mensagem' => 'Cliente inválido']);
+        }
+    }
+
+    //fim
+
 }

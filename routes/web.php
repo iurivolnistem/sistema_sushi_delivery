@@ -27,12 +27,18 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/buscar/clientes', 'Web\\ClienteController@dashboardClientes');
     Route::get('/buscar/produtos', 'Web\\ProdutoController@dashboardProdutos');
     Route::get('/pedido/informacao/{id}', 'Web\PedidoController@buscarPedido');
+    Route::get('/lista/clientes', 'Web\\ClienteController@lista');
+    Route::get('/excluir/cliente/{id}', 'Web\\ClienteController@excluir');
+    Route::get('/ativar/cliente/{id}', 'Web\\ClienteController@ativarCliente');
 
     Route::get('/buscar/pedidos/soma', 'Web\\PedidoController@somarPedidos');
     Route::get('/buscar/pedidos/status', 'Web\\PedidoController@getPedidosStatus');
     Route::get('/buscar/entradas/mes', 'Web\PedidoController@getEntradasMes');
     Route::get('/soma/entradas/mes', 'Web\PedidoController@somarPedidosMes');
     Route::get('/lista/pedidos', 'Web\\PedidoController@buscarPedidos');
+    Route::get('/cancelar/pedido/{id}', 'Web\\PedidoController@cancelar');
+    Route::get('/nova-etapa/pedido/{id}', 'Web\\PedidoController@proximaEtapa');
+    Route::get('/registro/pedidos', 'Web\\PedidoController@registro');
 
     Route::get('/cadastrar/produtos', 'Web\\ProdutoController@index');
     Route::post('/cadastrar/produtos', 'Web\\ProdutoController@salvar');

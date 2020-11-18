@@ -1,4 +1,10 @@
 $(document).ready(function (){
+    if($(document).find('[class="alert alert-success"]')){
+        setTimeout(() => {
+            $(document).find('[class="alert alert-success text-center"]').remove()
+        }, 3000);
+    }
+    
     $('.openBtn').on('click', function(){
         let id = $(this).data('pedido')
         $('#myModal').modal({show:true})
@@ -7,17 +13,18 @@ $(document).ready(function (){
             type: 'get',
             url: '/pedido/informacao/'+id,
             success: function(response){
+                console.log(response)
                 $('.modal-title').html('');
-                if(response.pedido.status === 'Aguardando'){
+                if(response.pedido.status === 0){
                     $('.modal-header').css('background-color', '#4e73df');
                 }
-                if(response.pedido.status === 'Preparo'){
+                if(response.pedido.status === 1){
                     $('.modal-header').css('background-color', '#f6c23e');
                 }
-                if(response.pedido.status === 'Saiu'){
+                if(response.pedido.status === 2){
                     $('.modal-header').css('background-color', '#FA7921');
                 }
-                if(response.pedido.status === 'Entregue'){
+                if(response.pedido.status === 3){
                     $('.modal-header').css('background-color', '#1cc88a');
                 }
                 $('.modal-title').html('Pedido: #'+response.pedido.id)
@@ -31,8 +38,18 @@ $(document).ready(function (){
                     $('#conteudo-pedido #todos-produtos').append(element_produto)
                 })
 
-                // $('#conteudo-pedido #pedido-cliente').html('')
-                // $('#conteudo-pedido #pedido-cliente').append('<strong>Cliente: </strong>'+response.pedido.cliente.nome)
+                $('#conteudo-pedido #pedido-pagamento #pagamento').html('')
+                $('#conteudo-pedido #pedido-pagamento #pagamento').append(response.pedido.pagamento == 1 ? 'Cartão de crédito' : response.pedido.pagamento == 2 ? 'Dinheiro sem troco' : 'Dinheiro com troco');
+                
+                if(response.pedido.troco == '' || response.pedido.troco == null){
+                    $('#conteudo-pedido #pedido-troco #troco').html('')
+                }
+                else{
+                    $('#conteudo-pedido #pedido-troco #troco').html('')
+                    $('#conteudo-pedido #pedido-troco #troco').append('Troco: R$' + response.pedido.troco);
+                }
+                
+            
 
                 $('#conteudo-pedido #pedido-endereco').html('')
                 response.endereco.forEach((endereco, index) => {

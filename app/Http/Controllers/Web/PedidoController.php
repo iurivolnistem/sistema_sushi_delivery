@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Pedido;
 use App\Models\Produto;
+use Facade\FlareClient\View;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Type\Decimal;
 
@@ -87,5 +88,29 @@ class PedidoController extends Controller
 
             return response()->json(['pedido' => $pedido, 'endereco' => $pedido->cliente->enderecos]);
         }
+    }
+
+    public function cancelar($id){
+        $pedido = Pedido::where('id', $id)->update([
+            'status' => $this->cancelado
+        ]);
+
+        return redirect()->back()->with('mensagem', 'Pedido cancelado com sucesso!');
+    }
+
+    public function proximaEtapa($id){
+        $pedido = Pedido::where('id', $id)->first();
+        
+        Pedido::where('id', $id)->update([
+            'status' => $pedido->status+1
+        ]);
+
+        return redirect()->back()->with('mensagem', 'Pedido atualizado com sucesso!');
+    }
+
+    public function registro(){
+        $lista_pedidos = Pedido::all();
+
+        return View('dashboard.lista_todospedidos', compact('lista_pedidos', $lista_pedidos));
     }
 }

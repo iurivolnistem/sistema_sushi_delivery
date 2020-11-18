@@ -18,4 +18,40 @@ class ClienteController extends Controller
             return response()->json(['status' => 'false', 'mensagem' => 'Nenhum cliente cadastrado!']);
         }
     }
+
+    public function lista(){
+        $lista_clientes = Cliente::all();
+
+        return View('dashboard.lista_clientes', compact('lista_clientes', $lista_clientes));
+    }
+
+    public function excluir($id){
+        $row = Cliente::where('id', '=', $id)->count();
+
+        if($row > 0){
+            Cliente::where('id', '=', $id)->update([
+                'status' => 0
+            ]);
+
+            return redirect()->back()->with('mensagem', 'Cliente excluido com sucesso!');
+        }
+        else{
+            return redirect()->back()->with('mensagem', 'Este Cliente não existe!');
+        }
+    }
+
+    public function ativarCliente($id){
+        $row = Cliente::where('id', '=', $id)->count();
+
+        if($row > 0){
+            Cliente::where('id', '=', $id)->update([
+                'status' => 1
+            ]);
+
+            return redirect()->back()->with('mensagem', 'Cliente ativado com sucesso!');
+        }
+        else{
+            return redirect()->back()->with('mensagem', 'Este Cliente não existe!');
+        }
+    }
 }

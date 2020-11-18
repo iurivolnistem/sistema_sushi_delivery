@@ -17,6 +17,8 @@ class CreatePedidosTable extends Migration
             $table->increments('id');
             $table->decimal('valor', 8,2);
             $table->integer('status');
+            $table->integer('pagamento');
+            $table->decimal('troco', 8,2)->nullable();
             $table->timestampsTz(0);
             $table->integer('id_cliente')->unsigned();
             $table->foreign('id_cliente')->references('id')->on('clientes');

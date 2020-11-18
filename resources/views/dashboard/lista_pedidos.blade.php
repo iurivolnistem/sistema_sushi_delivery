@@ -13,6 +13,9 @@
             <h4 class="font-weight-bold text-primary">Pedidos</h4>
         </div>
     </div>
+    @if (session()->has('mensagem'))
+        <h4 class="alert alert-success text-center">{{ session('mensagem') }}</h4>
+    @endif
     <div class="row" style="padding-bottom: 20px;">
         <div class="col-md-3 column">
             <div class="card card-item">
@@ -30,8 +33,8 @@
                                 <div class="buttons">
                                     <button class="btn btn-info openBtn" data-pedido="{{$item->id}}"><i class="fas fa-info-circle"></i></button>
                                     @if($item->status !== 3 && $item->status !== 2)
-                                        <a href="" class="btn btn-danger"><i class="fas fa-ban"></i></a>
-                                        <button href="" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></button>
+                                        <a href="/cancelar/pedido/{{$item->id}}" class="btn btn-danger"><i class="fas fa-ban"></i></a>
+                                        <a href="/nova-etapa/pedido/{{$item->id}}" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></a>
                                     @endif
                                 </div>
                                 <div class="horario">
@@ -59,8 +62,8 @@
                                 <div class="buttons">
                                     <button class="btn btn-info openBtn" data-pedido="{{$item->id}}"><i class="fas fa-info-circle"></i></button>
                                     @if($item->status !== 3 && $item->status !== 2)
-                                        <a href="" class="btn btn-danger"><i class="fas fa-ban"></i></a>
-                                        <button href="" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></button>
+                                        <a href="/cancelar/pedido/{{$item->id}}" class="btn btn-danger"><i class="fas fa-ban"></i></a>
+                                        <a href="/nova-etapa/pedido/{{$item->id}}" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></a>
                                     @endif
                                 </div>
                                 <div class="horario">
@@ -87,9 +90,9 @@
                                 </div>
                                 <div class="buttons">
                                     <button class="btn btn-info openBtn" data-pedido="{{$item->id}}"><i class="fas fa-info-circle"></i></button>
-                                    @if($item->status !== 3 && $item->status !== 2)
+                                    <a href="/nova-etapa/pedido/{{$item->id}}" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></a>
+                                    @if($item->status !== 2 && $item->status !== 3)
                                         <a href="" class="btn btn-danger"><i class="fas fa-ban"></i></a>
-                                        <button href="" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></button>
                                     @endif
                                 </div>
                                 <div class="horario">
@@ -117,7 +120,7 @@
                                 <div class="buttons">
                                     <button class="btn btn-info openBtn" data-pedido="{{$item->id}}"><i class="fas fa-info-circle"></i></button>
                                     @if($item->status !== 3 && $item->status !== 2)
-                                        <a href="" class="btn btn-danger"><i class="fas fa-ban"></i></a>
+                                        <a href="/cancelar/pedido/{{$item->id}}" class="btn btn-danger"><i class="fas fa-ban"></i></a>
                                         <button href="" class="btn btn-success"><i class="fas fa-arrow-circle-right"></i></button>
                                     @endif
                                 </div>
@@ -144,7 +147,10 @@
                    <div id="conteudo-pedido">
                        <div id="todos-produtos"></div>
                        <h4 id="pedido-valor"></h4>
-                        {{-- <div id="pedido-cliente"></div> --}}
+                        <div id="pedido-pagamento"><span>Forma de pagamento: </span> 
+                            <span id="pagamento"></span>
+                        </div>
+                        <div id="pedido-troco"><span id="troco"></span></div>
                         <div id="pedido-endereco" class="text-justify"></div>
                    </div>
                 </div>

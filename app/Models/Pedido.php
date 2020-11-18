@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pedido extends Model
 {
     protected $table = 'pedidos';
-    protected $fillable = ['id_cliente', 'valor', 'status'];
+    protected $fillable = ['id_cliente', 'valor', 'status', 'pagamento', 'troco'];
 
     public function produtos(){
         return $this->belongsToMany(Produto::class, 'produto_pedido', 'id_pedido', 'id_produto')->withPivot('quantidade');
