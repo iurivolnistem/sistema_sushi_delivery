@@ -49,3 +49,5 @@ Route::get('/pedido/{id}', 'Api\\ApiController@getPedido');
 Route::get('/pedido/confirmarEntrega/{id}', 'Api\\ApiController@confirmaEntrega');
 Route::post('/pedido', 'Api\\ApiController@fazerPedido');
 //fim
+
+Route::get('/teste', 'Api\\ApiController@teste');

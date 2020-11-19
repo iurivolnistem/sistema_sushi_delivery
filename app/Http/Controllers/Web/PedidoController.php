@@ -8,6 +8,8 @@ use App\Models\Produto;
 use Facade\FlareClient\View;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Type\Decimal;
+use App\Exports\PedidosExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PedidoController extends Controller
 {
@@ -112,5 +114,9 @@ class PedidoController extends Controller
         $lista_pedidos = Pedido::all();
 
         return View('dashboard.lista_todospedidos', compact('lista_pedidos', $lista_pedidos));
+    }
+
+    public function exportar(){
+        return Excel::download(new PedidosExport, 'pedidos.xls');
     }
 }

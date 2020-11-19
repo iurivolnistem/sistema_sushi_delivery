@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Exports\ProdutosExport;
 use App\Http\Controllers\Controller;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProdutoController extends Controller
 {
@@ -113,5 +115,9 @@ class ProdutoController extends Controller
         else{
             return response()->json(['status' => 'false', 'mensagem' => 'Nenhum produto cadastrado!']);
         }
+    }
+
+    public function exportar(){
+        return Excel::download(new ProdutosExport, 'produtos.xls');
     }
 }

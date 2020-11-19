@@ -26,9 +26,15 @@
 @else
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3" style="display: flex; align-items: center;justify-content: space-between;">
-      <h6 class="m-0 font-weight-bold text-primary">Tabela de pedidos</h6>
-      <button id="btnExportar" class="btn btn-success">Exportar para excel</button>
+    <div class="card-header py-3">
+      <div class="row">
+        <div class="col-md-6">
+          <h6 class="m-0 font-weight-bold text-primary text-left">Tabela de pedidos</h6>
+        </div>
+        <div class="col-md-6" style="display: flex;justify-content: flex-end;">
+          <button id="btnExportar" class="btn btn-success">Exportar para excel</button>
+        </div>
+      </div>
     </div>
     <div class="card-body">
         <table class="table table-bordered" id="pedidos_table" width="100%" cellspacing="0">

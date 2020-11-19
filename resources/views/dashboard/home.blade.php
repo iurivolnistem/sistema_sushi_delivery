@@ -96,8 +96,14 @@
           <h6 class="m-0 font-weight-bold text-primary">Entradas por mês</h6>
         </div>
         <div class="card-body">
-          <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-            <canvas id="myBarChart" width="1037" height="320" class="chartjs-render-monitor" style="display: block; width: 1037px; height: 320px;"></canvas>
+          <div class="chart-bar" style="width: 100%;height: 36.5vh;">
+            <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand">
+              <div class=""></div></div>
+              <div class="chartjs-size-monitor-shrink">
+                <div class=""></div>
+              </div>
+            </div>
+            <canvas id="myBarChart" class="chartjs-render-monitor" style="display: block; width: 100%;height: 100%;"></canvas>
           </div>
         </div>
       </div>

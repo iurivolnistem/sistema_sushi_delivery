@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Exports\ClientesExport;
 use App\Http\Controllers\Controller;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClienteController extends Controller
 {
@@ -53,5 +55,9 @@ class ClienteController extends Controller
         else{
             return redirect()->back()->with('mensagem', 'Este Cliente não existe!');
         }
+    }
+
+    public function exportar(){
+        return Excel::download(new ClientesExport, 'clientes.xls');
     }
 }

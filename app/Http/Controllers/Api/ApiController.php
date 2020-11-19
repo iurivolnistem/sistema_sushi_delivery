@@ -299,4 +299,10 @@ class ApiController extends Controller
 
     //fim
 
+    public function teste(){
+        $pedidos = DB::table('pedidos')->select('id', 'valor', 'troco', 'created_at', DB::raw('CASE WHEN status = 0 THEN "Aguardando" WHEN status = 1 THEN "Preparando" WHEN status = 2 THEN "Saiu para entrega" WHEN status = 3 THEN "Entregue" WHEN status = 4 THEN "Cancelado" ELSE "Devolvido" END AS status'), DB::raw('CASE WHEN pagamento = 1 THEN "Cartão de Crédito" WHEN pagamento = 2 THEN "Dinheiro sem troco" ELSE "Dinheiro com troco" END AS pagamento'))->get();
+        
+        return response()->json($pedidos); 
+    }
+
 }

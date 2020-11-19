@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/lista/clientes', 'Web\\ClienteController@lista');
     Route::get('/excluir/cliente/{id}', 'Web\\ClienteController@excluir');
     Route::get('/ativar/cliente/{id}', 'Web\\ClienteController@ativarCliente');
+    Route::get('/exportar/clientes', 'Web\\ClienteController@exportar');
 
     Route::get('/buscar/pedidos/soma', 'Web\\PedidoController@somarPedidos');
     Route::get('/buscar/pedidos/status', 'Web\\PedidoController@getPedidosStatus');
@@ -39,6 +40,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/cancelar/pedido/{id}', 'Web\\PedidoController@cancelar');
     Route::get('/nova-etapa/pedido/{id}', 'Web\\PedidoController@proximaEtapa');
     Route::get('/registro/pedidos', 'Web\\PedidoController@registro');
+    Route::get('/exportar/pedidos', 'Web\\PedidoController@exportar');
 
     Route::get('/cadastrar/produtos', 'Web\\ProdutoController@index');
     Route::post('/cadastrar/produtos', 'Web\\ProdutoController@salvar');
@@ -46,4 +48,5 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/editar/produto/{id}', 'Web\\ProdutoController@editar');
     Route::post('/editar/produto/{id}', 'Web\\ProdutoController@atualizar');
     Route::get('/excluir/produto/{id}', 'Web\\ProdutoController@excluir');
+    Route::get('/exportar/produtos', 'Web\\ProdutoController@exportar');
 });
