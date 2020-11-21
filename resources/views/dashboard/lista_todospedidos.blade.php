@@ -17,7 +17,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Tabela de pedidos</h6>
             </div>
             <div class="card-body">
-                <h5 class="font-weight-bold">Nenhum cliente cadastrado!</h5>
+                <h5 class="font-weight-bold">Nenhum pedido foi feito :(</h5>
             </div>
         </div>
     </div>

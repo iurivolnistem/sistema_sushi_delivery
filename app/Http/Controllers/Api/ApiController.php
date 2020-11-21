@@ -192,7 +192,7 @@ class ApiController extends Controller
     //Funções de produtos
 
     public function getProdutos(){
-        $lista = Produto::where('status', true)->get();
+        $lista = Produto::where('status', true)->orderBy('nome', 'ASC')->get();
 
         if($lista != ''){
             return response()->json(['error' => '', 'data' => $lista]);
@@ -299,10 +299,14 @@ class ApiController extends Controller
 
     //fim
 
-    public function teste(){
-        $pedidos = DB::table('pedidos')->select('id', 'valor', 'troco', 'created_at', DB::raw('CASE WHEN status = 0 THEN "Aguardando" WHEN status = 1 THEN "Preparando" WHEN status = 2 THEN "Saiu para entrega" WHEN status = 3 THEN "Entregue" WHEN status = 4 THEN "Cancelado" ELSE "Devolvido" END AS status'), DB::raw('CASE WHEN pagamento = 1 THEN "Cartão de Crédito" WHEN pagamento = 2 THEN "Dinheiro sem troco" ELSE "Dinheiro com troco" END AS pagamento'))->get();
-        
-        return response()->json($pedidos); 
+    public function horarioFuncionamento(){
+        $hora = date('H');
+
+        if($hora < 12){
+            return response()->json(['status' => false]);
+        }
+        return response()->json(['status' => true]);
+
     }
 
 }

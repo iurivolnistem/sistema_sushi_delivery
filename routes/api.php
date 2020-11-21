@@ -50,4 +50,4 @@ Route::get('/pedido/confirmarEntrega/{id}', 'Api\\ApiController@confirmaEntrega'
 Route::post('/pedido', 'Api\\ApiController@fazerPedido');
 //fim
 
-Route::get('/teste', 'Api\\ApiController@teste');
+Route::get('/verificar/horario', 'Api\\ApiController@horarioFuncionamento');
