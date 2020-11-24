@@ -96,8 +96,59 @@
 }
 
 #myModal #conteudo-pedido #todos-produtos{
-/* #myModal #conteudo-pedido #pedido-cliente,
-#myModal #conteudo-pedido #pedido-endereco{ */
     padding: 10px;
-    border-left: 2px solid rgba(0,0,0,0.3);
+    border: 0.3px solid rgba(0,0,0,0.3);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+#myModal #conteudo-pedido #todos-produtos::before{
+    content: 'Produtos';
+    text-transform: uppercase;
+    border-bottom: 0.5px dotted #000;
+    font-weight: bold;
+}
+
+#myModal #conteudo-pedido #todos-produtos p:first-child{
+    margin-top: 20px;;
+}
+
+
+
+#myModal #conteudo-pedido #pedido-endereco{
+    padding: 10px;
+    border: 0.3px solid rgba(0,0,0,0.3);
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+#myModal #conteudo-pedido #pedido-endereco::before{
+    content: 'Endereço';
+    text-transform: uppercase;
+    border-bottom: 0.5px dotted #000;
+    font-weight: bold;
+}
+
+#myModal #conteudo-pedido #pedido-endereco p:first-child{
+    margin-top: 20px;;
+}
+
+
+#myModal #conteudo-pedido #pedido-pagamento{
+    padding: 10px;
+    border: 0.3px solid rgba(0,0,0,0.3);
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+#myModal #conteudo-pedido #pedido-pagamento::before{
+    content: 'Pagamento';
+    text-transform: uppercase;
+    border-bottom: 0.5px dotted #000;
+    font-weight: bold;
+}
+
+#myModal #conteudo-pedido #pedido-pagamento p:first-child{
+    margin-top: 20px;;
 }

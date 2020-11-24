@@ -31,6 +31,7 @@ $(document).ready(function (){
                 // $('#conteudo-pedido').html('')
 
                 $('#conteudo-pedido #todos-produtos').html('')
+                $('#conteudo-pedido #pedido-pagamento #troco').html('')
 
                 response.pedido.produtos.forEach((produto, index) => {
                     element_produto = '<p>'+ produto.nome + ' - ' + '<strong> Qtde: '+ produto.pivot.quantidade +'</strong> </p>';
@@ -41,12 +42,8 @@ $(document).ready(function (){
                 $('#conteudo-pedido #pedido-pagamento #pagamento').html('')
                 $('#conteudo-pedido #pedido-pagamento #pagamento').append(response.pedido.pagamento == 1 ? 'Cartão de crédito' : response.pedido.pagamento == 2 ? 'Dinheiro sem troco' : 'Dinheiro com troco');
                 
-                if(response.pedido.troco == '' || response.pedido.troco == null){
-                    $('#conteudo-pedido #pedido-troco #troco').html('')
-                }
-                else{
-                    $('#conteudo-pedido #pedido-troco #troco').html('')
-                    $('#conteudo-pedido #pedido-troco #troco').append('Troco: R$' + response.pedido.troco);
+                if(response.pedido.pagamento == 3){
+                    $('#conteudo-pedido #pedido-pagamento #troco').append('Troco: R$' + response.pedido.troco);
                 }
                 
             

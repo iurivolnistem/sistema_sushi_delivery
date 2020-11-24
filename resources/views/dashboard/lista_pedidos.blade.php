@@ -145,13 +145,13 @@
                 </div>
                 <div class="modal-body">
                    <div id="conteudo-pedido">
-                       <div id="todos-produtos"></div>
-                       <h4 id="pedido-valor"></h4>
-                        <div id="pedido-pagamento"><span>Forma de pagamento: </span> 
-                            <span id="pagamento"></span>
-                        </div>
-                        <div id="pedido-troco"><span id="troco"></span></div>
+                        <div id="todos-produtos"></div>
                         <div id="pedido-endereco" class="text-justify"></div>
+                        <div id="pedido-pagamento"> 
+                            <p id="pagamento"></p>
+                            <p id="troco"></p>
+                        </div>
+                        <h4 id="pedido-valor"></h4>
                    </div>
                 </div>
             </div>

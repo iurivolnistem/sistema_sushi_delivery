@@ -48,6 +48,7 @@ Route::get('/pedidos/cliente/{id}', 'Api\\ApiController@getPedidos');
 Route::get('/pedido/{id}', 'Api\\ApiController@getPedido');
 Route::get('/pedido/confirmarEntrega/{id}', 'Api\\ApiController@confirmaEntrega');
 Route::post('/pedido', 'Api\\ApiController@fazerPedido');
+Route::get('/cancelar/pedido/{id}', 'Api\\ApiController@cancelar');
 //fim
 
 Route::get('/verificar/horario', 'Api\\ApiController@horarioFuncionamento');

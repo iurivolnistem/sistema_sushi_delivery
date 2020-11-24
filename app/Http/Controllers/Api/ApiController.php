@@ -282,6 +282,18 @@ class ApiController extends Controller
         }
     }
 
+    public function cancelar($id){
+        $pedido = Pedido::where('id', $id)->update([
+            'status' => $this->cancelado
+        ]);
+
+        if($pedido){
+            return response()->json(['error' => '', 'mensagem' => 'Pedido cancelado com sucesso!']);
+        }
+
+        return response()->json(['error' => 'erro', 'mensagem' => 'Erro ao cancelar seu pedido, tente novamente!']);
+    }
+
     //fim
 
     //Funções de clientes
